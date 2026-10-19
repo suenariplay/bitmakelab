@@ -1,0 +1,161 @@
+---
+const { id = 'mascota', animo = 'feliz', extra = '' } = Astro.props;
+const gPiel = `url(#piel-${id})`;
+const gPanza = `url(#panza-${id})`;
+const gOjo = `url(#ojo-${id})`;
+---
+<svg class:list={['mascota-svg', extra]} id={id} data-animo={animo} viewBox="0 0 240 220" role="img" aria-label="Bit, la mascota de bitmakelab">
+  <defs>
+    <linearGradient id={`piel-${id}`} x1="0.1" y1="0" x2="0.75" y2="1">
+      <stop offset="0" stop-color="#5CF3B3" />
+      <stop offset="0.5" stop-color="#23D188" />
+      <stop offset="1" stop-color="#0A9560" />
+    </linearGradient>
+    <linearGradient id={`panza-${id}`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D6FCE8" />
+      <stop offset="1" stop-color="#8BEEC2" />
+    </linearGradient>
+    <linearGradient id={`ojo-${id}`} x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#D2F4E5" />
+    </linearGradient>
+  </defs>
+
+  <ellipse class="m-sombra" cx="120" cy="210" rx="72" ry="9" />
+
+  <g class="m-todo">
+    <g class="m-cola">
+      <path d="M120 158 C86 188 34 178 26 148 C19 122 50 100 76 116 C97 129 88 158 65 156 C50 155 48 139 59 135"
+            fill="none" stroke={gPiel} stroke-width="26" stroke-linecap="round" />
+    </g>
+
+    <g class="m-pata m-pata-b">
+      <rect x="118" y="164" width="27" height="40" rx="13.5" fill={gPiel} />
+      <circle cx="120" cy="203" r="7" fill="#0B8F5D" /><circle cx="133" cy="207" r="7" fill="#0B8F5D" /><circle cx="146" cy="203" r="7" fill="#0B8F5D" />
+    </g>
+    <g class="m-pata m-pata-a">
+      <rect x="72" y="164" width="27" height="40" rx="13.5" fill={gPiel} />
+      <circle cx="74" cy="203" r="7" fill="#0B8F5D" /><circle cx="87" cy="207" r="7" fill="#0B8F5D" /><circle cx="100" cy="203" r="7" fill="#0B8F5D" />
+    </g>
+
+    <ellipse cx="104" cy="150" rx="58" ry="46" fill={gPiel} />
+    <ellipse cx="108" cy="160" rx="36" ry="30" fill={gPanza} />
+
+    <g class="m-brazo m-brazo-a">
+      <rect x="46" y="126" width="17" height="32" rx="8.5" fill={gPiel} />
+      <circle cx="49" cy="157" r="6" fill="#0B8F5D" /><circle cx="58" cy="160" r="6" fill="#0B8F5D" />
+    </g>
+    <g class="m-brazo m-brazo-b">
+      <rect x="142" y="128" width="17" height="30" rx="8.5" fill={gPiel} />
+      <circle cx="146" cy="158" r="6" fill="#0B8F5D" /><circle cx="155" cy="160" r="6" fill="#0B8F5D" />
+    </g>
+
+    <g class="m-giro">
+      <g class="m-cabeza">
+        <path class="m-cresta" d="M108 48 l11 -30 l15 22 z M130 38 l13 -30 l16 24 z M152 46 l11 -24 l13 22 z" />
+        <ellipse cx="152" cy="88" rx="60" ry="54" fill={gPiel} />
+        <ellipse cx="202" cy="100" rx="24" ry="19" fill={gPiel} />
+        <circle class="m-nariz" cx="214" cy="92" r="3.2" />
+        <ellipse class="m-mejilla" cx="190" cy="114" rx="14" ry="8.5" />
+
+        <ellipse cx="164" cy="74" rx="26" ry="27" fill={gOjo} />
+        <circle class="m-pupila" cx="168" cy="76" r="13" />
+        <circle class="m-brillo" cx="173" cy="69" r="4.5" />
+        <circle class="m-brillo-2" cx="161" cy="85" r="2.2" />
+        <ellipse class="m-parpado" cx="164" cy="74" rx="26.5" ry="27.5" fill={gPiel} />
+        <path class="m-ceja" d="M144 42 q20 -9 42 3" />
+
+        <g class="m-bocas">
+          <path class="m-boca b-feliz" d="M192 106 q13 15 27 1" />
+          <ellipse class="m-boca b-sorpresa" cx="205" cy="112" rx="9" ry="11" />
+          <path class="m-boca b-linea" d="M194 111 q11 4 22 0" />
+          <path class="m-boca b-guino" d="M192 106 q13 18 28 -3" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
+
+<style is:global>
+  .mascota-svg{display:block;width:100%;height:auto;overflow:visible}
+  .mascota-svg .m-sombra{fill:#0A2118;opacity:.16}
+  .mascota-svg .m-cresta{fill:#12A870}
+  .mascota-svg .m-nariz{fill:#087A4F;opacity:.7}
+  .mascota-svg .m-mejilla{fill:#0A9560;opacity:.35}
+  .mascota-svg .m-pupila{fill:#06291C}
+  .mascota-svg .m-brillo{fill:#FFFFFF}
+  .mascota-svg .m-brillo-2{fill:#FFFFFF;opacity:.75}
+  .mascota-svg .m-ceja{fill:none;stroke:#06291C;stroke-width:5;stroke-linecap:round;opacity:.5;transform-box:fill-box;transform-origin:center}
+  .mascota-svg .m-boca{fill:none;stroke:#06291C;stroke-width:5;stroke-linecap:round;display:none}
+  .mascota-svg .b-sorpresa{fill:#06291C;stroke:none}
+
+  /* articulaciones */
+  .mascota-svg .m-todo{transform-box:fill-box;transform-origin:50% 100%}
+  .mascota-svg .m-cola{transform-box:fill-box;transform-origin:100% 40%}
+  .mascota-svg .m-giro{transform-box:fill-box;transform-origin:18% 92%;transform:rotate(var(--tilt,0deg));transition:transform .4s ease-out}
+  .mascota-svg .m-cabeza{transform-box:fill-box;transform-origin:18% 92%}
+  .mascota-svg .m-pata{transform-box:fill-box;transform-origin:50% 4%}
+  .mascota-svg .m-brazo{transform-box:fill-box;transform-origin:50% 5%}
+  .mascota-svg .m-pupila,.mascota-svg .m-brillo,.mascota-svg .m-brillo-2{transform:translate(var(--px,0px),var(--py,0px));transition:transform .1s linear}
+
+  /* reposo */
+  @keyframes bit-respira{0%,100%{transform:scale(1,1)}50%{transform:scale(.992,1.018)}}
+  @keyframes bit-cola{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
+  @keyframes bit-cabeza{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  @keyframes bit-parpado{0%,90%,100%{transform:scaleY(0)}93%,96%{transform:scaleY(1)}}
+  @keyframes bit-brazo-reposo{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+  .mascota-svg .m-todo{animation:bit-respira 4s ease-in-out infinite}
+  .mascota-svg .m-cola{animation:bit-cola 4.6s ease-in-out infinite}
+  .mascota-svg .m-cabeza{animation:bit-cabeza 3.6s ease-in-out infinite}
+  .mascota-svg .m-parpado{animation:bit-parpado 5.4s infinite}
+  .mascota-svg .m-brazo-a{animation:bit-brazo-reposo 4s ease-in-out infinite}
+
+  /* andando */
+  @keyframes bit-andar{0%,100%{transform:translateY(0) scale(1,1)}25%{transform:translateY(-5px) scale(.985,1.02)}50%{transform:translateY(0) scale(1.015,.99)}75%{transform:translateY(-5px) scale(.985,1.02)}}
+  @keyframes bit-pata-a{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(16deg)}}
+  @keyframes bit-pata-b{0%,100%{transform:rotate(16deg)}50%{transform:rotate(-16deg)}}
+  @keyframes bit-brazo-andar{0%,100%{transform:rotate(10deg)}50%{transform:rotate(-10deg)}}
+  .mascota-svg.es-andando .m-todo{animation:bit-andar .46s linear infinite}
+  .mascota-svg.es-andando .m-pata-a{animation:bit-pata-a .46s ease-in-out infinite}
+  .mascota-svg.es-andando .m-pata-b{animation:bit-pata-b .46s ease-in-out infinite}
+  .mascota-svg.es-andando .m-brazo-a{animation:bit-brazo-andar .46s ease-in-out infinite}
+  .mascota-svg.es-andando .m-brazo-b{animation:bit-brazo-andar .46s ease-in-out infinite reverse}
+  .mascota-svg.es-andando .m-cabeza{animation:bit-cabeza .46s ease-in-out infinite}
+
+  /* gestos */
+  @keyframes bit-brinco{0%,100%{transform:translateY(0) rotate(0)}35%{transform:translateY(-12px) rotate(-3deg)}70%{transform:translateY(0) rotate(2deg)}}
+  @keyframes bit-saluda{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(-52deg)}}
+  .mascota-svg[data-animo="emocionado"]{animation:bit-brinco 1.15s ease-in-out infinite}
+  .mascota-svg.saluda .m-brazo-a{animation:bit-saluda .5s ease-in-out 3}
+
+  /* caras */
+  .mascota-svg .b-feliz{display:block}
+  .mascota-svg[data-animo="sorprendido"] .b-feliz{display:none}
+  .mascota-svg[data-animo="sorprendido"] .b-sorpresa{display:block}
+  .mascota-svg[data-animo="sorprendido"] .m-ojo-blanco{transform:scale(1.1);transform-box:fill-box;transform-origin:center}
+  .mascota-svg[data-animo="pensando"] .b-feliz,.mascota-svg[data-animo="concentrado"] .b-feliz{display:none}
+  .mascota-svg[data-animo="pensando"] .b-linea,.mascota-svg[data-animo="concentrado"] .b-linea{display:block}
+  .mascota-svg[data-animo="pensando"] .m-pupila,.mascota-svg[data-animo="pensando"] .m-brillo,.mascota-svg[data-animo="pensando"] .m-brillo-2{transform:translate(-5px,-6px)}
+  .mascota-svg[data-animo="concentrado"] .m-ceja{transform:translateY(6px) rotate(7deg);opacity:.95}
+  .mascota-svg[data-animo="guino"] .b-feliz{display:none}
+  .mascota-svg[data-animo="guino"] .b-guino{display:block}
+  .mascota-svg[data-animo="guino"] .m-parpado{animation:none;transform:scaleY(.6)}
+
+  /* entrada de la pagina */
+  @keyframes bit-entra{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  .hero-texto > *{animation:bit-entra .75s cubic-bezier(.2,.8,.2,1) both}
+  .hero-texto > *:nth-child(2){animation-delay:.09s}
+  .hero-texto > *:nth-child(3){animation-delay:.18s}
+  .hero-texto > *:nth-child(4){animation-delay:.27s}
+  @keyframes bit-entra-mascota{from{opacity:0;transform:translateY(34px) rotate(-3deg) scale(.92)}to{opacity:1;transform:none}}
+  .hero-mascota{animation:bit-entra-mascota 1s .15s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes bit-flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  .globo{animation:bit-flota 3.4s ease-in-out infinite}
+  .revelar{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+  .revelar.dentro{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion: reduce){
+    .mascota-svg,.mascota-svg *, .hero-texto > *, .hero-mascota, .globo{animation:none !important}
+    .revelar{opacity:1;transform:none}
+  }
+</style>
