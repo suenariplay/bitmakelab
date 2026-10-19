@@ -1,0 +1,180 @@
+---
+import Base from '../layouts/Base.astro';
+import Mascota from '../components/Mascota.astro';
+
+const servicios = [
+  { n: '01', t: 'Webs que trabajan', d: 'Diseño y desarrollo de webs rápidas, claras y adaptadas a móvil. Pensadas para que la gente entienda qué haces y te escriba.' },
+  { n: '02', t: 'Apps a medida', d: 'Cuentas de usuario, reservas, pagos, paneles de gestión. Si tu negocio cabe en una pantalla, lo construimos.' },
+  { n: '03', t: 'IA aplicada', d: 'Asistentes, automatizaciones y búsquedas inteligentes que quitan trabajo repetitivo de encima. Sin humo.' },
+  { n: '04', t: 'Producto y acompañamiento', d: 'Del primer boceto a la primera versión, y después: mantenimiento, mejoras y alguien que contesta el teléfono.' },
+];
+
+const pasos = [
+  { n: '1', t: 'Idea', d: 'Escuchamos qué tienes en la cabeza y para quién es. En una charla sabemos qué hace falta y qué no.' },
+  { n: '2', t: 'Código', d: 'Diseñamos y construimos por partes, enseñando avances cada semana. Nada de cajas negras.' },
+  { n: '3', t: 'Resultados', d: 'Sale a internet, se mide y se mejora. Tu idea funcionando, no una presentación bonita.' },
+];
+
+const caras = [
+  { a: 'feliz', t: 'Feliz' },
+  { a: 'sorprendido', t: 'Sorprendido' },
+  { a: 'pensando', t: 'Pensando' },
+  { a: 'emocionado', t: 'Emocionado' },
+  { a: 'guino', t: 'Guiño' },
+  { a: 'concentrado', t: 'Concentrado' },
+];
+---
+
+<Base>
+  <header class="barra">
+    <a class="logo" href="#inicio">
+      <span class="logo-marca" aria-hidden="true">b</span>
+      <span class="logo-texto">bitmaker<span>lab</span></span>
+    </a>
+    <nav class="menu">
+      <a href="#que-hacemos">Qué hacemos</a>
+      <a href="#como">Cómo trabajamos</a>
+      <a href="#mascota">La mascota</a>
+    </nav>
+    <a class="boton boton-verde boton-pequeno" href="#contacto">Hablemos</a>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="hero-texto">
+      <p class="etiqueta">Estudio de producto digital</p>
+      <h1>Ideas <span class="flecha">→</span> Código<br /><span class="verde">→ Resultados</span></h1>
+      <p class="entrada">Diseñamos y construimos webs, apps e inteligencia artificial para gente con prisa y buenas ideas. Sin humo y sin reuniones eternas.</p>
+      <div class="acciones">
+        <a class="boton boton-verde" href="#contacto">Cuéntanos tu idea</a>
+        <a class="boton boton-fantasma" href="#que-hacemos">Ver qué hacemos</a>
+      </div>
+      <ul class="senales">
+        <li>Del boceto al producto</li>
+        <li>Trato directo</li>
+        <li>Entregas cada semana</li>
+      </ul>
+    </div>
+
+    <div class="hero-mascota">
+      <div class="globo-caja"><div class="globo" id="globo">¡Hola! Soy Bit.</div></div>
+      <Mascota id="mascotaHero" animo="feliz" />
+      <div class="sombra" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta-pista">
+      <span>Ideas más rápidas</span><span>·</span>
+      <span>Desarrollo sin complicaciones</span><span>·</span>
+      <span>De ideas a resultados</span><span>·</span>
+      <span>Tu idea también se adapta</span><span>·</span>
+      <span>Ideas más rápidas</span><span>·</span>
+      <span>Desarrollo sin complicaciones</span><span>·</span>
+      <span>De ideas a resultados</span><span>·</span>
+      <span>Tu idea también se adapta</span><span>·</span>
+    </div>
+  </div>
+
+  <section class="seccion" id="que-hacemos">
+    <div class="seccion-cabeza revelar">
+      <p class="etiqueta etiqueta-oscura">Qué hacemos</p>
+      <h2>De la idea al producto, sin dar rodeos</h2>
+      <p class="subtitulo">Cuatro formas de trabajar juntos. Elige la que encaje; del resto nos encargamos nosotros.</p>
+    </div>
+    <div class="rejilla rejilla-4">
+      {servicios.map((s) => (
+        <article class="tarjeta revelar">
+          <span class="num">{s.n}</span>
+          <h3>{s.t}</h3>
+          <p>{s.d}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="seccion banda-oscura" id="como">
+    <div class="seccion-cabeza revelar">
+      <p class="etiqueta">Cómo trabajamos</p>
+      <h2 class="blanco">Tres pasos y ninguna sorpresa</h2>
+      <p class="subtitulo claro">Sin procesos eternos: hablamos, construimos y lo ponemos a funcionar.</p>
+    </div>
+    <ol class="pasos">
+      {pasos.map((p) => (
+        <li class="revelar">
+          <div class="paso-num">{p.n}</div>
+          <h3>{p.t}</h3>
+          <p class="claro">{p.d}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="seccion" id="mascota">
+    <div class="mascota-bloque revelar">
+      <div>
+        <p class="etiqueta etiqueta-oscura">La mascota</p>
+        <h2>Bit también trabaja aquí</h2>
+        <p class="subtitulo">Es una salamanquesa verde con muchas caras. Pasea por la web mientras bajas, mira lo que señalas y cambia de humor cuando le tocas. Prueba sus expresiones:</p>
+        <div class="botones-animo">
+          {caras.map((c, i) => (
+            <button class="chip" data-animo={c.a} type="button" aria-pressed={i === 0 ? 'true' : 'false'}>{c.t}</button>
+          ))}
+        </div>
+        <p class="nota-mini">Nada de imágenes pesadas: Bit está dibujada con formas y se mueve con el propio navegador.</p>
+      </div>
+      <div class="mascota-espejo">
+        <div class="globo-caja"><div class="globo" id="globoEspejo">¡Hola! Soy Bit.</div></div>
+        <Mascota id="mascotaEspejo" animo="feliz" />
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion-contacto" id="contacto">
+    <div class="contacto-caja revelar">
+      <div>
+        <p class="etiqueta etiqueta-oscura">Contacto</p>
+        <h2>¿Tienes una idea rondando?</h2>
+        <p class="subtitulo">Cuéntanosla en dos líneas. Contestamos rápido, sin formularios interminables ni comerciales de por medio.</p>
+        <div class="dato"><span>Correo</span><a href="mailto:hola@bitmakelab.com">hola@bitmakelab.com</a></div>
+        <div class="dato"><span>Dónde</span>En remoto, desde cualquier sitio</div>
+        <div class="dato"><span>Plazos</span>Una primera respuesta en 24-48 h</div>
+      </div>
+      <form class="formulario" id="formulario">
+        <label>Tu nombre<input type="text" name="nombre" placeholder="Cómo te llamas" required /></label>
+        <label>Tu correo<input type="email" name="email" placeholder="donde@te.leo" required /></label>
+        <label>Qué tienes en mente<textarea name="idea" rows="4" placeholder="Una web, una app, un asistente con IA…"></textarea></label>
+        <button class="boton boton-oscuro" type="submit">Enviar idea</button>
+        <p class="estado-form" id="estadoForm">Versión prototipo: este formulario todavía no envía correos.</p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="pie">
+    <div class="pie-logo">
+      <span class="logo-marca" aria-hidden="true">b</span>
+      <span class="logo-texto">bitmaker<span>lab</span></span>
+    </div>
+    <p>Ideas → Código → Resultados.</p>
+    <p class="pie-mini">© {new Date().getFullYear()} bitmakelab · Hecho con ideas, código y un poco de café.</p>
+  </footer>
+
+  <div class="paseante" id="paseante" aria-hidden="true">
+    <div class="globo-paseante" id="globoPaseante">¡Hola!</div>
+    <svg class="paseante-svg" viewBox="0 0 140 130" role="presentation">
+      <path d="M44 100 C18 106 2 88 12 72 C20 60 40 64 38 78" fill="none" stroke="#2BD98A" stroke-width="13" stroke-linecap="round" />
+      <ellipse cx="70" cy="92" rx="30" ry="24" fill="#2BD98A" />
+      <ellipse cx="74" cy="98" rx="17" ry="13" fill="#9BEFC4" />
+      <rect x="56" y="108" width="11" height="16" rx="5.5" fill="#17B477" />
+      <rect x="78" y="108" width="11" height="16" rx="5.5" fill="#17B477" />
+      <path d="M78 36 l6 -15 l9 12 z M94 32 l7 -16 l9 13 z" fill="#159C68" />
+      <ellipse cx="98" cy="56" rx="38" ry="34" fill="#2BD98A" />
+      <ellipse cx="128" cy="66" rx="12" ry="10" fill="#2BD98A" />
+      <circle cx="108" cy="50" r="14" fill="#F7FFF9" />
+      <circle cx="110" cy="50" r="7" fill="#07251A" />
+      <circle cx="113" cy="46" r="2.6" fill="#fff" />
+      <path d="M120 76 q8 8 16 -1" fill="none" stroke="#07251A" stroke-width="4" stroke-linecap="round" />
+    </svg>
+  </div>
+
+  <script is:inline src="/js/mascota.js"></script>
+</Base>
