@@ -1,8 +1,8 @@
 ---
 const { id = 'mascota', animo = 'feliz', extra = '' } = Astro.props;
-const piel = `url(#piel-${id})`;
-const panza = `url(#panza-${id})`;
-const ojo = `url(#ojo-${id})`;
+const gPiel = `url(#piel-${id})`;
+const gPanza = `url(#panza-${id})`;
+const gOjo = `url(#ojo-${id})`;
 ---
 <svg class:list={['mascota-svg', extra]} id={id} data-animo={animo} viewBox="0 0 240 220" role="img" aria-label="Bit, la mascota de bitmakelab">
   <defs>
@@ -25,44 +25,44 @@ const ojo = `url(#ojo-${id})`;
 
   <g class="m-todo">
     <g class="m-cola">
-      <path class="m-cola-trazo" d="M120 158 C86 188 34 178 26 148 C19 122 50 100 76 116 C97 129 88 158 65 156 C50 155 48 139 59 135"
-            fill="none" stroke-width="26" stroke-linecap="round" />
+      <path d="M120 158 C86 188 34 178 26 148 C19 122 50 100 76 116 C97 129 88 158 65 156 C50 155 48 139 59 135"
+            fill="none" stroke={gPiel} stroke-width="26" stroke-linecap="round" />
     </g>
 
     <g class="m-pata m-pata-b">
-      <rect x="118" y="164" width="27" height="40" rx="13.5" />
-      <circle cx="120" cy="203" r="7" /><circle cx="133" cy="207" r="7" /><circle cx="146" cy="203" r="7" />
+      <rect x="118" y="164" width="27" height="40" rx="13.5" fill={gPiel} />
+      <circle cx="120" cy="203" r="7" fill="#0B8F5D" /><circle cx="133" cy="207" r="7" fill="#0B8F5D" /><circle cx="146" cy="203" r="7" fill="#0B8F5D" />
     </g>
     <g class="m-pata m-pata-a">
-      <rect x="72" y="164" width="27" height="40" rx="13.5" />
-      <circle cx="74" cy="203" r="7" /><circle cx="87" cy="207" r="7" /><circle cx="100" cy="203" r="7" />
+      <rect x="72" y="164" width="27" height="40" rx="13.5" fill={gPiel} />
+      <circle cx="74" cy="203" r="7" fill="#0B8F5D" /><circle cx="87" cy="207" r="7" fill="#0B8F5D" /><circle cx="100" cy="203" r="7" fill="#0B8F5D" />
     </g>
 
-    <ellipse class="m-cuerpo" cx="104" cy="150" rx="58" ry="46" />
-    <ellipse class="m-panza" cx="108" cy="160" rx="36" ry="30" />
+    <ellipse cx="104" cy="150" rx="58" ry="46" fill={gPiel} />
+    <ellipse cx="108" cy="160" rx="36" ry="30" fill={gPanza} />
 
     <g class="m-brazo m-brazo-a">
-      <rect x="46" y="126" width="17" height="32" rx="8.5" />
-      <circle cx="49" cy="157" r="6" /><circle cx="58" cy="160" r="6" />
+      <rect x="46" y="126" width="17" height="32" rx="8.5" fill={gPiel} />
+      <circle cx="49" cy="157" r="6" fill="#0B8F5D" /><circle cx="58" cy="160" r="6" fill="#0B8F5D" />
     </g>
     <g class="m-brazo m-brazo-b">
-      <rect x="142" y="128" width="17" height="30" rx="8.5" />
-      <circle cx="146" cy="158" r="6" /><circle cx="155" cy="160" r="6" />
+      <rect x="142" y="128" width="17" height="30" rx="8.5" fill={gPiel} />
+      <circle cx="146" cy="158" r="6" fill="#0B8F5D" /><circle cx="155" cy="160" r="6" fill="#0B8F5D" />
     </g>
 
     <g class="m-giro">
       <g class="m-cabeza">
         <path class="m-cresta" d="M108 48 l11 -30 l15 22 z M130 38 l13 -30 l16 24 z M152 46 l11 -24 l13 22 z" />
-        <ellipse class="m-craneo" cx="152" cy="88" rx="60" ry="54" />
-        <ellipse class="m-hocico" cx="202" cy="100" rx="24" ry="19" />
+        <ellipse cx="152" cy="88" rx="60" ry="54" fill={gPiel} />
+        <ellipse cx="202" cy="100" rx="24" ry="19" fill={gPiel} />
         <circle class="m-nariz" cx="214" cy="92" r="3.2" />
         <ellipse class="m-mejilla" cx="190" cy="114" rx="14" ry="8.5" />
 
-        <ellipse class="m-ojo-blanco" cx="164" cy="74" rx="26" ry="27" />
+        <ellipse cx="164" cy="74" rx="26" ry="27" fill={gOjo} />
         <circle class="m-pupila" cx="168" cy="76" r="13" />
         <circle class="m-brillo" cx="173" cy="69" r="4.5" />
         <circle class="m-brillo-2" cx="161" cy="85" r="2.2" />
-        <ellipse class="m-parpado" cx="164" cy="74" rx="26.5" ry="27.5" />
+        <ellipse class="m-parpado" cx="164" cy="74" rx="26.5" ry="27.5" fill={gPiel} />
         <path class="m-ceja" d="M144 42 q20 -9 42 3" />
 
         <g class="m-bocas">
@@ -78,23 +78,18 @@ const ojo = `url(#ojo-${id})`;
 
 <style is:global>
   .mascota-svg{display:block;width:100%;height:auto;overflow:visible}
-  .mascota-svg .m-sombra{fill:#0A2118;opacity:.16;transform-box:fill-box;transform-origin:center}
-  .mascota-svg .m-cola-trazo{stroke:url(#piel-grad)}
-  .mascota-svg .m-cuerpo,.mascota-svg .m-craneo,.mascota-svg .m-hocico,.mascota-svg .m-pata,.mascota-svg .m-brazo{fill:currentColor}
-  .mascota-svg .m-panza{fill:url(#panza-grad)}
+  .mascota-svg .m-sombra{fill:#0A2118;opacity:.16}
   .mascota-svg .m-cresta{fill:#12A870}
   .mascota-svg .m-nariz{fill:#087A4F;opacity:.7}
   .mascota-svg .m-mejilla{fill:#0A9560;opacity:.35}
-  .mascota-svg .m-ojo-blanco{fill:#F7FFFB}
   .mascota-svg .m-pupila{fill:#06291C}
-  .mascota-svg .m-brillo{fill:#fff}
-  .mascota-svg .m-brillo-2{fill:#fff;opacity:.75}
-  .mascota-svg .m-parpado{fill:currentColor}
-  .mascota-svg .m-ceja{fill:none;stroke:#06291C;stroke-width:5;stroke-linecap:round;opacity:.55;transform-box:fill-box;transform-origin:center}
+  .mascota-svg .m-brillo{fill:#FFFFFF}
+  .mascota-svg .m-brillo-2{fill:#FFFFFF;opacity:.75}
+  .mascota-svg .m-ceja{fill:none;stroke:#06291C;stroke-width:5;stroke-linecap:round;opacity:.5;transform-box:fill-box;transform-origin:center}
   .mascota-svg .m-boca{fill:none;stroke:#06291C;stroke-width:5;stroke-linecap:round;display:none}
   .mascota-svg .b-sorpresa{fill:#06291C;stroke:none}
 
-  /* --- articulaciones --- */
+  /* articulaciones */
   .mascota-svg .m-todo{transform-box:fill-box;transform-origin:50% 100%}
   .mascota-svg .m-cola{transform-box:fill-box;transform-origin:100% 40%}
   .mascota-svg .m-giro{transform-box:fill-box;transform-origin:18% 92%;transform:rotate(var(--tilt,0deg));transition:transform .4s ease-out}
@@ -103,7 +98,7 @@ const ojo = `url(#ojo-${id})`;
   .mascota-svg .m-brazo{transform-box:fill-box;transform-origin:50% 5%}
   .mascota-svg .m-pupila,.mascota-svg .m-brillo,.mascota-svg .m-brillo-2{transform:translate(var(--px,0px),var(--py,0px));transition:transform .1s linear}
 
-  /* --- reposo --- */
+  /* reposo */
   @keyframes bit-respira{0%,100%{transform:scale(1,1)}50%{transform:scale(.992,1.018)}}
   @keyframes bit-cola{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
   @keyframes bit-cabeza{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
@@ -115,7 +110,7 @@ const ojo = `url(#ojo-${id})`;
   .mascota-svg .m-parpado{animation:bit-parpado 5.4s infinite}
   .mascota-svg .m-brazo-a{animation:bit-brazo-reposo 4s ease-in-out infinite}
 
-  /* --- andando --- */
+  /* andando */
   @keyframes bit-andar{0%,100%{transform:translateY(0) scale(1,1)}25%{transform:translateY(-5px) scale(.985,1.02)}50%{transform:translateY(0) scale(1.015,.99)}75%{transform:translateY(-5px) scale(.985,1.02)}}
   @keyframes bit-pata-a{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(16deg)}}
   @keyframes bit-pata-b{0%,100%{transform:rotate(16deg)}50%{transform:rotate(-16deg)}}
@@ -127,26 +122,26 @@ const ojo = `url(#ojo-${id})`;
   .mascota-svg.es-andando .m-brazo-b{animation:bit-brazo-andar .46s ease-in-out infinite reverse}
   .mascota-svg.es-andando .m-cabeza{animation:bit-cabeza .46s ease-in-out infinite}
 
-  /* --- gestos --- */
+  /* gestos */
   @keyframes bit-brinco{0%,100%{transform:translateY(0) rotate(0)}35%{transform:translateY(-12px) rotate(-3deg)}70%{transform:translateY(0) rotate(2deg)}}
   @keyframes bit-saluda{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(-52deg)}}
   .mascota-svg[data-animo="emocionado"]{animation:bit-brinco 1.15s ease-in-out infinite}
   .mascota-svg.saluda .m-brazo-a{animation:bit-saluda .5s ease-in-out 3}
 
-  /* --- caras --- */
+  /* caras */
   .mascota-svg .b-feliz{display:block}
   .mascota-svg[data-animo="sorprendido"] .b-feliz{display:none}
   .mascota-svg[data-animo="sorprendido"] .b-sorpresa{display:block}
-  .mascota-svg[data-animo="sorprendido"] .m-ojo-blanco,.mascota-svg[data-animo="sorprendido"] .m-pupila{transform:scale(1.12);transform-box:fill-box;transform-origin:center}
+  .mascota-svg[data-animo="sorprendido"] .m-ojo-blanco{transform:scale(1.1);transform-box:fill-box;transform-origin:center}
   .mascota-svg[data-animo="pensando"] .b-feliz,.mascota-svg[data-animo="concentrado"] .b-feliz{display:none}
   .mascota-svg[data-animo="pensando"] .b-linea,.mascota-svg[data-animo="concentrado"] .b-linea{display:block}
   .mascota-svg[data-animo="pensando"] .m-pupila,.mascota-svg[data-animo="pensando"] .m-brillo,.mascota-svg[data-animo="pensando"] .m-brillo-2{transform:translate(-5px,-6px)}
-  .mascota-svg[data-animo="concentrado"] .m-ceja{transform:translateY(6px) rotate(7deg);opacity:.9}
+  .mascota-svg[data-animo="concentrado"] .m-ceja{transform:translateY(6px) rotate(7deg);opacity:.95}
   .mascota-svg[data-animo="guino"] .b-feliz{display:none}
   .mascota-svg[data-animo="guino"] .b-guino{display:block}
   .mascota-svg[data-animo="guino"] .m-parpado{animation:none;transform:scaleY(.6)}
 
-  /* --- entrada de la página --- */
+  /* entrada de la pagina */
   @keyframes bit-entra{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
   .hero-texto > *{animation:bit-entra .75s cubic-bezier(.2,.8,.2,1) both}
   .hero-texto > *:nth-child(2){animation-delay:.09s}
@@ -160,7 +155,7 @@ const ojo = `url(#ojo-${id})`;
   .revelar.dentro{opacity:1;transform:none}
 
   @media (prefers-reduced-motion: reduce){
-    .mascota-svg,.mascota-svg *,.mascota-svg .m-todo,.hero-texto > *,.hero-mascota,.globo{animation:none !important}
+    .mascota-svg,.mascota-svg *, .hero-texto > *, .hero-mascota, .globo{animation:none !important}
     .revelar{opacity:1;transform:none}
   }
 </style>
