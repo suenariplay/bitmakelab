@@ -1,4 +1,4 @@
-/* Bit, la mascota de bitmakelab: pasea, mira y cambia de cara. */
+/* Bit, la mascota de bitmakelab: pasea, mira, responde. */
 (function () {
   'use strict';
 
@@ -14,129 +14,137 @@
   };
 
   var hero = document.getElementById('mascotaHero');
-  var globoHero = document.getElementById('globo');
+  var globo = document.getElementById('globo');
   var espejo = document.getElementById('mascotaEspejo');
   var globoEspejo = document.getElementById('globoEspejo');
   var chips = document.querySelectorAll('.chip');
 
-  function ponerAnimo(animo, destino, globo) {
-    if (!destino || !animo) return;
-    destino.setAttribute('data-animo', animo);
-    if (globo && frases[animo]) globo.textContent = frases[animo];
+  /* --- Bit que pasea por el borde inferior --- */
+  var paseante = document.querySelector('.paseante');
+  var bitPaseante = null;
+
+  if (paseante && hero) {
+    bitPaseante = hero.cloneNode(true);
+    bitPaseante.id = 'mascotaPaseante';
+    bitPaseante.removeAttribute('aria-label');
+    bitPaseante.setAttribute('aria-hidden', 'true');
+    var viejo = paseante.querySelector('svg');
+    if (viejo) {
+      viejo.parentNode.replaceChild(bitPaseante, viejo);
+    } else {
+      paseante.insertBefore(bitPaseante, paseante.firstChild);
+    }
   }
 
-  Array.prototype.forEach.call(chips, function (chip) {
-    chip.addEventListener('click', function () {
-      Array.prototype.forEach.call(chips, function (otro) {
-        otro.classList.remove('activo');
-        otro.setAttribute('aria-pressed', 'false');
-      });
-      chip.classList.add('activo');
-      chip.setAttribute('aria-pressed', 'true');
-      var animo = chip.getAttribute('data-animo');
-      ponerAnimo(animo, espejo, globoEspejo);
-      ponerAnimo(animo, hero, globoHero);
-    });
-  });
+  var ultimaX = -1;
+  var parar;
 
-  /* El ojo sigue al puntero */
-  if (hero && !quieto) {
-    var pupila = hero.querySelector('.m-pupila');
-    var brillo = hero.querySelector('.m-brillo');
-    window.addEventListener('pointermove', function (e) {
-      var caja = hero.getBoundingClientRect();
-      var cx = caja.left + caja.width / 2;
-      var cy = caja.top + caja.height / 2;
-      var dx = Math.max(-1, Math.min(1, (e.clientX - cx) / (window.innerWidth / 2)));
-      var dy = Math.max(-1, Math.min(1, (e.clientY - cy) / (window.innerHeight / 2)));
-      var t = 'translate(' + (dx * 6).toFixed(1) + 'px,' + (dy * 5).toFixed(1) + 'px)';
-      if (pupila) pupila.style.transform = t;
-      if (brillo) brillo.style.transform = t;
-    }, { passive: true });
+  function pintarPaseante() {
+    if (!paseante || !bitPaseante) return;
+    var alto = document.documentElement.scrollHeight - window.innerHeight;
+    var p = alto > 0 ? Math.min(1, Math.max(0, window.scrollY / alto)) : 0;
+    var libre = Math.max(0, window.innerWidth - 132);
+    var x = Math.round(p * libre);
+
+    paseante.style.transform = 'translate3d(' + x + 'px,0,0)';
+
+    if (x !== ultimaX) {
+      var dir = x > ultimaX ? 1 : -1;
+      bitPaseante.style.transform = 'scaleX(' + dir + ')';
+      bitPaseante.classList.add('es-andando');
+      ultimaX = x;
+      clearTimeout(parar);
+      parar = setTimeout(function () {
+        bitPaseante.classList.remove('es-andando');
+      }, 280);
+    }
   }
 
-  /* Bit pasea por la página al hacer scroll */
-  var paseante = document.getElementById('paseante');
-  var globoPaseante = document.getElementById('globoPaseante');
-  var svgPaseante = paseante ? paseante.querySelector('.paseante-svg') : null;
-  var ultimoX = 0;
-  var temporizador = null;
-  var quietoTemporal = null;
-  var dichas = ['¡Hola!', 'Ideas más rápidas', 'Desarrollo sin complicaciones', 'De ideas a resultados', '¿Subimos?'];
-  var indice = 0;
-
-  function decir(texto) {
-    if (!globoPaseante) return;
-    globoPaseante.textContent = texto;
-    globoPaseante.classList.add('visible');
-    clearTimeout(temporizador);
-    temporizador = setTimeout(function () {
-      globoPaseante.classList.remove('visible');
-    }, 2800);
-  }
-
-  if (paseante && !quieto) {
+  if (!quieto) {
     var pedido = false;
-
-    var pasear = function () {
-      pedido = false;
-      var recorrido = document.documentElement.scrollHeight - window.innerHeight;
-      var progreso = recorrido > 0 ? window.scrollY / recorrido : 0;
-      var tope = Math.max(0, window.innerWidth - paseante.offsetWidth - 12);
-      var x = Math.round(progreso * tope);
-      paseante.style.transform = 'translateX(' + x + 'px)';
-
-      if (x !== ultimoX && svgPaseante) {
-        svgPaseante.style.setProperty('--dir', x < ultimoX ? '-1' : '1');
-        ultimoX = x;
-      }
-
-      paseante.classList.add('andando');
-      clearTimeout(quietoTemporal);
-      quietoTemporal = setTimeout(function () {
-        paseante.classList.remove('andando');
-      }, 420);
-    };
-
     window.addEventListener('scroll', function () {
-      if (!pedido) {
-        pedido = true;
-        window.requestAnimationFrame(pasear);
-      }
+      if (pedido) return;
+      pedido = true;
+      window.requestAnimationFrame(function () {
+        pintarPaseante();
+        pedido = false;
+      });
     }, { passive: true });
+    window.addEventListener('resize', pintarPaseante);
+    pintarPaseante();
+  }
 
-    window.addEventListener('resize', pasear);
-    pasear();
+  /* --- la mirada sigue al ratón --- */
+  if (hero && !quieto) {
+    window.addEventListener('pointermove', function (ev) {
+      var caja = hero.getBoundingClientRect();
+      if (!caja.width) return;
+      var cx = caja.left + caja.width * 0.68;
+      var cy = caja.top + caja.height * 0.32;
+      var dx = ev.clientX - cx;
+      var dy = ev.clientY - cy;
+      var lejos = Math.min(1, Math.sqrt(dx * dx + dy * dy) / 460);
+      var ang = Math.atan2(dy, dx);
+      hero.style.setProperty('--px', (Math.cos(ang) * 7 * lejos).toFixed(1) + 'px');
+      hero.style.setProperty('--py', (Math.sin(ang) * 6 * lejos).toFixed(1) + 'px');
+      hero.style.setProperty('--tilt', (Math.cos(ang) * 4 * lejos).toFixed(1) + 'deg');
+    }, { passive: true });
+  }
 
-    paseante.addEventListener('click', function () {
-      decir(dichas[indice % dichas.length]);
-      indice++;
+  /* --- caras --- */
+  function ponerCara(svg, animo) {
+    if (!svg) return;
+    svg.setAttribute('data-animo', animo);
+  }
+
+  if (chips.length) {
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var animo = chip.getAttribute('data-animo') || 'feliz';
+        chips.forEach(function (c) { c.classList.remove('activo'); });
+        chip.classList.add('activo');
+        ponerCara(espejo, animo);
+        ponerCara(hero, animo);
+        if (globoEspejo) globoEspejo.textContent = frases[animo] || frases.feliz;
+        if (globo) globo.textContent = frases[animo] || frases.feliz;
+      });
     });
   }
 
-  /* Aparición suave de las secciones */
-  var aRevelar = document.querySelectorAll('.revelar');
-  if (!quieto && 'IntersectionObserver' in window) {
-    var observador = new IntersectionObserver(function (entradas) {
-      entradas.forEach(function (entrada) {
-        if (entrada.isIntersecting) {
-          entrada.target.classList.add('visto');
-          observador.unobserve(entrada.target);
+  /* --- saludo al entrar --- */
+  if (hero && !quieto) {
+    setTimeout(function () {
+      hero.classList.add('saluda');
+      setTimeout(function () { hero.classList.remove('saluda'); }, 1800);
+    }, 900);
+  }
+
+  /* --- aparición de secciones --- */
+  var revelar = document.querySelectorAll('.revelar');
+  if ('IntersectionObserver' in window && revelar.length) {
+    var obs = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('dentro');
+          obs.unobserve(e.target);
         }
       });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
-    Array.prototype.forEach.call(aRevelar, function (el) { observador.observe(el); });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+    revelar.forEach(function (el) { obs.observe(el); });
   } else {
-    Array.prototype.forEach.call(aRevelar, function (el) { el.classList.add('visto'); });
+    revelar.forEach(function (el) { el.classList.add('dentro'); });
   }
 
-  /* Formulario de prototipo */
-  var formulario = document.getElementById('formulario');
-  var estado = document.getElementById('estadoForm');
-  if (formulario) {
-    formulario.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (estado) estado.textContent = 'Gracias. Esto es un prototipo: escríbenos a hola@bitmakelab.com y te contestamos igual.';
+  /* --- formulario de prototipo --- */
+  var form = document.querySelector('.contacto form');
+  if (form) {
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var aviso = form.querySelector('.aviso-form');
+      if (aviso) {
+        aviso.textContent = 'Formulario de prototipo: todavía no envía correos. Escríbenos directamente.';
+        aviso.style.color = '#0A9560';
+      }
     });
   }
-}());
+})();
